@@ -237,6 +237,14 @@ def highlight(sections, language, preserve_paths=True, outdir=None):
     if not outdir:
         raise TypeError("Missing the required 'outdir' keyword argument.")
 
+    # juicebox specific. For images, insert the image on the docs side
+    if language == 'yaml':
+        for section in sections:
+            if section['code_text'].endswith('.png'):
+                section['docs_text'].append(
+                    '<img src="../public/img/{}">'.format(
+                        section['code_text'].split(' ')[-1]))
+
     output = pygments.highlight(language["divider_text"].join(section["code_text"].rstrip() for section in sections),
                                 language["lexer"],
                                 formatters.get_formatter_by_name("html"))
