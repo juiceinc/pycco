@@ -351,6 +351,10 @@ languages = {
 
     ".hs": {"name": "haskell", "symbol": "--",
             "multistart": "{-", "multiend": "-}"},
+
+    ".yaml": {"name": "yaml", "symbol": "#"},
+
+    ".yml": {"name": "yaml", "symbol": "#"},
 }
 
 # Build out the appropriate matchers and delimiters for each language.
