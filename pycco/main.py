@@ -496,8 +496,7 @@ def _flatten_sources(sources):
     return _sources
 
 
-def process(sources, preserve_paths=True, outdir=None, language=None,
-            encoding="utf8", index=False, skip=False):
+def process(sources, preserve_paths=True, outdir=None, language=None, encoding="utf8", index=False, skip=False):
     """For each source file passed as argument, generate the documentation."""
 
     if not outdir:
