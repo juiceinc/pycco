@@ -509,7 +509,6 @@ def process(sources, preserve_paths=True, outdir=None, language=None, encoding="
                                                language=language,
                                                encoding=encoding))
 
-            print("pycco: {} -> {}".format(s, dest))
             generated_files.append(dest)
 
             if sources:
