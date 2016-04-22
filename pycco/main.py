@@ -414,10 +414,8 @@ def destination(filepath, preserve_paths=True, outdir=None):
     dirname, filename = path.split(filepath)
     if not outdir:
         raise TypeError("Missing the required 'outdir' keyword argument.")
-    try:
-        name = re.sub(r"\.[^.]*$", "", filename)
-    except ValueError:
-        name = filename
+
+    name = filename
     if preserve_paths:
         name = path.join(dirname, name)
     dest = path.join(outdir, u"{}.html".format(name))
