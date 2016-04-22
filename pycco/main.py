@@ -52,13 +52,25 @@ def generate_documentation(source, outdir=None, preserve_paths=True,
     return _generate_documentation(source, code, outdir, preserve_paths, language)
 
 
+def prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
+    newsections = []
+    for section in sections:
+        match = re.match('^class (\w*Service)\(.*', section.code_text)
+        if match:
+            newsections.append({
+                "docs_text": "=== {} ===".format(match.groups()[0]),
+                "code_text": ""
+            })
+        newsections.append(section)
+    sections = newsections
+
 def _generate_documentation(file_path, code, outdir, preserve_paths, language):
     """
     Helper function to allow documentation generation without file handling.
     """
     language = get_language(file_path, code, language=language)
     sections = parse(code, language)
-    # prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
+    prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
     highlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
     return generate_html(file_path, sections, preserve_paths=preserve_paths, outdir=outdir)
 
