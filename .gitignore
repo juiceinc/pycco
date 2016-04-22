@@ -4,6 +4,7 @@
 build/*
 dist/*
 docs/*
+.idea/
 /tags
 
 .cache
