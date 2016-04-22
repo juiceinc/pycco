@@ -55,7 +55,7 @@ def generate_documentation(source, outdir=None, preserve_paths=True,
 def prehighlight(sections, language, preserve_paths, outdir):
     newsections = []
     for section in sections:
-        match = re.match('^class (\w*Service)\(.*', section.code_text)
+        match = re.match('^class (\w*Service)\(.*', section["code_text"])
         if match:
             newsections.append({
                 "docs_text": "=== {} ===".format(match.groups()[0]),
