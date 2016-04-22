@@ -52,7 +52,7 @@ def generate_documentation(source, outdir=None, preserve_paths=True,
     return _generate_documentation(source, code, outdir, preserve_paths, language)
 
 
-def prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
+def prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir):
     newsections = []
     for section in sections:
         match = re.match('^class (\w*Service)\(.*', section.code_text)
