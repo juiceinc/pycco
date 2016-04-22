@@ -58,7 +58,7 @@ def _generate_documentation(file_path, code, outdir, preserve_paths, language):
     """
     language = get_language(file_path, code, language=language)
     sections = parse(code, language)
-    prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
+    # prehighlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
     highlight(sections, language, preserve_paths=preserve_paths, outdir=outdir)
     return generate_html(file_path, sections, preserve_paths=preserve_paths, outdir=outdir)
 
@@ -223,16 +223,6 @@ def preprocess(comment, preserve_paths=True, outdir=None):
     return comment
 
 # === Highlighting the source code ===
-
-def prehighlight(sections, language, preserve_paths=True, outdir=None):
-    # juicebox specific. For images, insert the image on the docs side
-    if language == 'yaml':
-        for section in sections:
-            if section['code_text'].endswith('.png'):
-                section['docs_text'].append(
-                    '<img src="../public/img/{}">'.format(
-                        section['code_text'].split(' ')[-1]))
-    return sections
 
 def highlight(sections, language, preserve_paths=True, outdir=None):
     """
