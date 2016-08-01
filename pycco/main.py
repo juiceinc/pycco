@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 # This module contains all of our static resources.
-from pycco_resources import pycco_template
+from pycco_resources import pycco_template, css as pycco_css
 
 # Import our external dependencies.
 import optparse
@@ -338,6 +338,7 @@ def generate_html(source, sections, preserve_paths=True, outdir=None):
         raise TypeError("Missing the required 'outdir' keyword argument")
     title = path.basename(source)
     dest = destination(source, preserve_paths=preserve_paths, outdir=outdir)
+    csspath = path.relpath(path.join(outdir, "pycco.css"), path.split(dest)[0])
 
     for sect in sections:
         sect["code_html"] = re.sub(
@@ -544,6 +545,9 @@ def process(sources, preserve_paths=True, outdir=None, language=None, encoding="
     # Proceed to generating the documentation.
     if sources:
         outdir = ensure_directory(outdir)
+        css = open(path.join(outdir, "pycco.css"), "wb")
+        css.write(pycco_css.encode(encoding))
+        css.close()
 
         generated_files = []
 

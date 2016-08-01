@@ -1,13 +1,6 @@
 import pystache
 
-
-html = """\
-<!DOCTYPE html>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>{{ title }}</title>
-  <style type="text/css">
+css = """\
 /*--------------------- Layout and Typography ----------------------------*/
 body {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
@@ -198,7 +191,15 @@ body .vc { color: #19469D }                     /* Name.Variable.Class */
 body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
-  </style>
+"""
+
+html = """\
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>{{ title }}</title>
+  <link rel="stylesheet" href="{{ stylesheet }}">
 </head>
 <body>
 <div id='container'>
