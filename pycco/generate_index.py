@@ -50,7 +50,11 @@ def generate_tree_html(tree):
     items = []
     for node, subtree in sorted(compat_items(tree)):
         if 'entry' in subtree:
-            html = u'<li><a href="{}">{}</a></li>'.format(subtree['entry']['relpath'], node)
+            node_text = node
+            node_parts = node_text.split('.')
+            if len(node_parts) == 3 and node_parts[-1] == 'html':
+                node_text = '.'.join(node_parts)
+            html = u'<li><a href="{}">{}</a></li>'.format(subtree['entry']['relpath'], node_text)
         else:
             html = u'<dl><dt>{}</dt><dd><ul>{}</ul></dd></dl>'.format(node, generate_tree_html(subtree))
 
