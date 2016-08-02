@@ -68,13 +68,16 @@ def generate_documentation(source, outdir=None, preserve_paths=True,
 def jb_highlight(sections, language, preserve_paths, outdir, file_path):
     """ Inject juicebox specific links """
     num_slashes = len(file_path.split('/'))-1
-    newsections = [ {"docs_text": "[Back to top]({}index.html)".format('../'*num_slashes),
+    newsections = [ {"docs_text": "[Back to top]({"
+                                  "}index.html)".format(
+        '../'*num_slashes),
                     "code_text": ""}]
 
     for section in sections:
         if language['name'] == 'python':
             # Insert a section for each data service
-            match = re.match('^class (\w*Service)\(.*', section["code_text"])
+            match = re.match('^class (\w*Service\w*)\(.*Service\)', section[
+                "code_text"])
             if match:
                 newsections.append({
                     "docs_text": "=== {} ===".format(match.groups()[0]),
@@ -83,26 +86,28 @@ def jb_highlight(sections, language, preserve_paths, outdir, file_path):
 
         if language['name'] == 'yaml':
             # Crossreference slice docs
-            match = re.search('slice_type: "?([\w-]+)"?', section["code_text"])
+            match = re.search('- slice_type: "?([\w-]+)"?', section[
+                "code_text"])
             if match:
                 slicetype = match.groups()[0]
-                section["docs_text"] += "\n[Docs for {}](https://dev.juiceboxdata.com/static/docs/slices.html#{})".format(slicetype,
-                                                                                slicetype.replace('-',''))
+                section["docs_text"] = "\n### {} \n[Docs for {}](" \
+                                        "https://dev.juiceboxdata.com/static/docs/slices.html#{})".format(slicetype, slicetype,
+                                                                                slicetype.replace('-','')) + section["docs_text"]
 
             # Crossreference data services
-            match = re.search('data_service: "?(\S*)\.(\S*)"?', section["code_text"])
+            match = re.search('data_service: "(\S*)\.(\S*)"', section[
+                "code_text"])
             if match:
                 dataservices_file, classname = match.groups()
                 if classname != "json":
-                    section["docs_text"] += "\n[See dataservice]({}.py.html#{})".format(dataservices_file, classname.lower())
+                    section["docs_text"] += "\n[See dataservice]({}.py.html#{" \
+                                            "}) ".format(dataservices_file, classname.lower())
 
             # Inject images
-            match = re.search('(?:logo|pattern): (?:\'|\")(.*\.(gif|jpg|jpeg|png))(?:\'|\")', section["code_text"])
+            match = re.search('(?:image): (?:\'|\")(.*\.(gif|jpg|jpeg|png))('
+                              '?:\'|\")', section["code_text"])
             if match:
                 img = match.groups()[0]
-                print("Matched", img)
-                # with open("yourfile.ext", "rb") as image_file:
-                #     encoded_string = base64.b64encode(image_file.read())
                 if img.startswith('http://') or img.startswith('https://'):
                     section["docs_text"] += "\n<img src='{}' style='max-width: 300px;'>".format(img)
                 else:
