@@ -224,6 +224,11 @@ def parse(code, language):
                     save(docs_text, code_text)
                     code_text = has_code = docs_text = ''
 
+            # Split yamls on top level list elements
+            if code_text and language["name"] == 'yaml' and line.startswith('-'):
+                save(docs_text, code_text)
+                code_text = has_code = docs_text = ''
+
             has_code = True
             code_text += line + '\n'
 
